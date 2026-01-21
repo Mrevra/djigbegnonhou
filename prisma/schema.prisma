@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model HeroSection {
+  id             String   @id @default(cuid())
+  firstName      String
+  lastName       String
+  nickname       String
+  titleEn        String
+  titleFr        String
+  taglineEn      String
+  taglineFr      String
+  ctaTextEn      String
+  ctaTextFr      String
+  ctaLink        String
+  profileImage   String?
+  resumeUrl      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("hero_sections")
+}
+
+model AboutSection {
+  id               String   @id @default(cuid())
+  introEn          String   @db.Text
+  introFr          String   @db.Text
+  descriptionEn    String   @db.Text
+  descriptionFr    String   @db.Text
+  yearsExperience  Int      @default(0)
+  projectsCompleted Int     @default(0)
+  clientsSatisfied Int      @default(0)
+  image            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("about_sections")
+}
+
+model SkillCategory {
+  id        String   @id @default(cuid())
+  nameEn    String
+  nameFr    String
+  order     Int      @default(0)
+  icon      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  skills    Skill[]
+
+  @@map("skill_categories")
+}
+
+model Skill {
+  id          String        @id @default(cuid())
+  nameEn      String
+  nameFr      String
+  level       Int           @default(0) // 0-100
+  icon        String?
+  categoryId  String
+  category    SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  order       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("skills")
+}
+
+model Project {
+  id            String   @id @default(cuid())
+  titleEn       String
+  titleFr       String
+  descriptionEn String   @db.Text
+  descriptionFr String   @db.Text
+  shortDescEn   String
+  shortDescFr   String
+  techStack     String[] // Array of technologies
+  role          String
+  impactEn      String   @db.Text
+  impactFr      String   @db.Text
+  images        String[] // Array of image URLs
+  githubUrl     String?
+  liveUrl       String?
+  featured      Boolean  @default(false)
+  published     Boolean  @default(false)
+  order         Int      @default(0)
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model Hackathon {
+  id            String   @id @default(cuid())
+  nameEn        String
+  nameFr        String
+  descriptionEn String   @db.Text
+  descriptionFr String   @db.Text
+  position      String
+  award         String?
+  date          DateTime
+  location      String
+  teamSize      Int?
+  techStack     String[]
+  projectUrl    String?
+  image         String?
+  published     Boolean  @default(false)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("hackathons")
+}
