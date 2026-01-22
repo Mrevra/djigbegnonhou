@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { AuthSessionProvider } from '@/components/auth-session-provider'
 import { Toaster } from '@/components/ui/toaster'
 import { LayoutContent } from '@/components/layout-content'
 
@@ -38,12 +39,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LanguageProvider>
-            <LayoutContent>
-              {children}
-            </LayoutContent>
-            <Toaster />
-          </LanguageProvider>
+          <AuthSessionProvider>
+            <LanguageProvider>
+              <LayoutContent>
+                {children}
+              </LayoutContent>
+              <Toaster />
+            </LanguageProvider>
+          </AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>
