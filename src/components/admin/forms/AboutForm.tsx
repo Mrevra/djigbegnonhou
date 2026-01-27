@@ -9,8 +9,19 @@ import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { updateAboutSection } from '@/app/actions'
 
+interface AboutSectionData {
+  introEn?: string
+  introFr?: string
+  descriptionEn?: string
+  descriptionFr?: string
+  yearsExperience?: number
+  projectsCompleted?: number
+  clientsSatisfied?: number
+  image?: string | null
+}
+
 interface AboutFormProps {
-  initialData: any
+  initialData?: AboutSectionData | null
 }
 
 export function AboutForm({ initialData }: AboutFormProps) {
@@ -49,7 +60,7 @@ export function AboutForm({ initialData }: AboutFormProps) {
           description: result.error || 'Failed to update about section',
         })
       }
-    } catch (error) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Error',

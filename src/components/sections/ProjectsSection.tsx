@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { formatDate, formatDateFr } from '@/lib/utils'
+// formatDate helpers removed — not used in this component
 
 interface Project {
   id: string

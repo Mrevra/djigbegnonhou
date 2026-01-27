@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useLanguage } from '@/contexts/LanguageContext'
-import Image from 'next/image'
 
 interface HeroSectionProps {
   data: {

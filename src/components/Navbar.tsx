@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Moon, Sun, Menu, X, Globe } from 'lucide-react'
 import { useTheme } from 'next-themes'
@@ -14,7 +13,6 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
   const { language, setLanguage, t } = useLanguage()
-  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {

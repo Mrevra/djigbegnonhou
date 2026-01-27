@@ -8,8 +8,23 @@ import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
 import { updateHeroSection } from '@/app/actions'
 
+interface HeroSectionData {
+  firstName?: string
+  lastName?: string
+  nickname?: string
+  titleEn?: string
+  titleFr?: string
+  taglineEn?: string
+  taglineFr?: string
+  ctaTextEn?: string
+  ctaTextFr?: string
+  ctaLink?: string
+  profileImage?: string | null
+  resumeUrl?: string | null
+}
+
 interface HeroFormProps {
-  initialData: any
+  initialData?: HeroSectionData | null
 }
 
 export function HeroForm({ initialData }: HeroFormProps) {
@@ -52,7 +67,7 @@ export function HeroForm({ initialData }: HeroFormProps) {
           description: result.error || 'Failed to update hero section',
         })
       }
-    } catch (error) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Error',

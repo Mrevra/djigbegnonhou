@@ -7,28 +7,39 @@ import { HackathonsSection } from '@/components/sections/HackathonsSection'
 import { ContactSection } from '@/components/sections/ContactSection'
 
 async function getPortfolioData() {
-  const [hero, about, categories, projects, hackathons] = await Promise.all([
-    prisma.heroSection.findFirst(),
-    prisma.aboutSection.findFirst(),
-    prisma.skillCategory.findMany({
-      include: {
-        skills: {
-          orderBy: { order: 'asc' },
+  try {
+    const [hero, about, categories, projects, hackathons] = await Promise.all([
+      prisma.heroSection.findFirst(),
+      prisma.aboutSection.findFirst(),
+      prisma.skillCategory.findMany({
+        include: {
+          skills: {
+            orderBy: { order: 'asc' },
+          },
         },
-      },
-      orderBy: { order: 'asc' },
-    }),
-    prisma.project.findMany({
-      where: { published: true },
-      orderBy: { order: 'asc' },
-    }),
-    prisma.hackathon.findMany({
-      where: { published: true },
-      orderBy: { date: 'desc' },
-    }),
-  ])
+        orderBy: { order: 'asc' },
+      }),
+      prisma.project.findMany({
+        where: { published: true },
+        orderBy: { order: 'asc' },
+      }),
+      prisma.hackathon.findMany({
+        where: { published: true },
+        orderBy: { date: 'desc' },
+      }),
+    ])
 
-  return { hero, about, categories, projects, hackathons }
+    return { hero, about, categories, projects, hackathons }
+  } catch {
+    // If database is unreachable during build, return safe defaults so build can complete.
+    return {
+      hero: null,
+      about: null,
+      categories: [],
+      projects: [],
+      hackathons: [],
+    }
+  }
 }
 
 export default async function HomePage() {
